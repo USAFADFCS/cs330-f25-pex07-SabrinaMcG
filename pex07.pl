@@ -3,8 +3,14 @@
 %
 % name: Sabrina McGarvey
 %
-% Documentation: None
-%
+% Documentation: I discussed my code with C2C Tanner Woodring, he pointed out that I had not capitilized some of my variables when I switched 
+% to organizing by day of the week.
+
+day(tuesday).
+day(wednesday).
+day(thursday).
+day(friday).
+
 cadet(smith).
 cadet(garcia).
 cadet(chen).
@@ -16,22 +22,17 @@ fly(kite).
 fly(fighter).
 fly(cloud).
 
-day(tuesday).
-day(wednesday).
-day(thursday).
-day(friday).
-
 solve :-
-    fly(SmithFly), fly(GarciaFly), fly(ChenFly), fly(JonesFly),
-    all_different([SmithFly, GarciaFly, ChenFly, JonesFly]),
+    cadet(TueCadet), cadet(WedCadet), cadet(ThuCadet), cadet(FriCadet),
+    all_different([TueCadet, WedCadet, ThuCadet, FriCadet]),
     
-    day(SmithDay), day(GarciaDay), day(ChenDay), day(JonesDay),
-    all_different([SmithDay, GarciaDay, ChenDay, JonesDay]),
+    fly(TueFly), fly(WedFly), fly(ThuFly), fly(FriFly),
+    all_different([TueFly, WedFly, ThuFly, FriFly]),
     
-    Triples = [ [smith, SmithFly, SmithDay],
-                [garcia, GarciaFly, GarciaDay],
-                [chen, ChenFly, ChenDay],
-                [jones, JonesFly, JonesDay] ],
+    Triples = [ [TueCadet, TueFly, tuesday],
+                [WedCadet, WedFly, wednesday],
+                [ThuCadet, ThuFly, thursday],
+                [FriCadet, FriFly, friday] ],
     
     % C4C Smith did not see a weather balloon, nor kite.
     \+ member([smith, weatherBalloon, _], Triples),
@@ -62,10 +63,10 @@ solve :-
     % The weather balloon was not spotted on Wednesday.
     \+ member([_, weatherBalloon, wednesday], Triples),
     
-    tell(smith, SmithFly, SmithDay),
-    tell(garcia, GarciaFly, GarciaDay),
-    tell(chen, ChenFly, ChenDay),
-    tell(jones, JonesFly, JonesDay).
+    tell(TueCadet, TueFly, tuesday),
+    tell(WedCadet, WedFly, wednesday),
+    tell(ThuCadet, ThuFly, thursday),
+    tell(FriCadet, FriFly, friday).
     
 % Succeeds if all elements of the argument list are bound and different.
 % Fails if any elements are unbound or equal to some other element.
@@ -77,5 +78,3 @@ tell(X, Y, Z) :-
     write('C4C '), write(X), write(' saw the '), write(Y), write(' on '), write(Z), write('.'), nl.
 % The query to get the answer(s) or that there is no answer
 % ?- solve.
-
-
